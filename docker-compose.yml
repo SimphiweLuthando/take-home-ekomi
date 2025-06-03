@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  database:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: outlook_addin
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: secretpassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - outlook-network
+
+  # Express.js Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+      - DATABASE_URL=postgresql://admin:secretpassword@database:5432/outlook_addin
+      - JWT_SECRET=your-super-secret-jwt-key-change-in-production
+    depends_on:
+      - database
+    networks:
+      - outlook-network
+    restart: unless-stopped
+
+  # Frontend Static Files Server
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    environment:
+      - BACKEND_URL=http://localhost:3001
+    depends_on:
+      - backend
+    networks:
+      - outlook-network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+
+networks:
+  outlook-network:
+    driver: bridge 

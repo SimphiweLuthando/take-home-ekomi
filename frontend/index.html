@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Enrichment - Outlook Add-in</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="app-header">
+        <div class="header-content">
+            <h1 class="app-title">
+                <i class="fas fa-address-book"></i>
+                Contact Enrichment
+            </h1>
+            <div class="user-info" id="userInfo" style="display: none;">
+                <span id="userEmail"></span>
+                <button class="btn-logout" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="main-content">
+        <!-- Login Panel -->
+        <div class="panel login-panel" id="loginPanel">
+            <div class="panel-header">
+                <h2><i class="fas fa-shield-alt"></i> Authentication Required</h2>
+                <p>Please log in to access contact enrichment features</p>
+            </div>
+            
+            <form class="login-form" id="loginForm">
+                <div class="form-group">
+                    <label for="email">
+                        <i class="fas fa-envelope"></i>
+                        Email Address
+                    </label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email" 
+                        required 
+                        placeholder="Enter your email address"
+                        autocomplete="email"
+                    >
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">
+                        <i class="fas fa-lock"></i>
+                        Password
+                    </label>
+                    <div class="password-input">
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password" 
+                            required 
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                        >
+                        <button type="button" class="toggle-password" id="togglePassword">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" id="loginSubmit">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span>Sign In</span>
+                </button>
+            </form>
+
+            <div class="demo-credentials">
+                <h3><i class="fas fa-info-circle"></i> Demo Credentials</h3>
+                <div class="credential-item">
+                    <strong>Email:</strong> john.doe@company.com<br>
+                    <strong>Password:</strong> password123
+                </div>
+                <div class="credential-item">
+                    <strong>Email:</strong> jane.smith@company.com<br>
+                    <strong>Password:</strong> password456
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Application Panel -->
+        <div class="panel app-panel" id="appPanel" style="display: none;">
+            <!-- Outlook Context Simulation -->
+            <div class="outlook-context">
+                <h3><i class="fas fa-envelope-open"></i> Email Context (Simulated)</h3>
+                <div class="context-info">
+                    <div class="sender-info">
+                        <label for="senderEmail">Sender Email:</label>
+                        <input 
+                            type="email" 
+                            id="senderEmail" 
+                            placeholder="Enter sender email to enrich"
+                            value="jane.smith@company.com"
+                        >
+                        <button class="btn btn-secondary" id="enrichBtn">
+                            <i class="fas fa-search"></i>
+                            Enrich Contact
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loading Indicator -->
+            <div class="loading" id="loadingIndicator" style="display: none;">
+                <div class="spinner"></div>
+                <p>Fetching contact information...</p>
+            </div>
+
+            <!-- Contact Information Display -->
+            <div class="contact-info" id="contactInfo" style="display: none;">
+                <div class="contact-header">
+                    <h3><i class="fas fa-user"></i> Contact Information</h3>
+                    <span class="enrichment-badge" id="enrichmentBadge">Enhanced</span>
+                </div>
+                
+                <div class="contact-details" id="contactDetails">
+                    <!-- Contact details will be populated by JavaScript -->
+                </div>
+                
+                <div class="contact-actions">
+                    <button class="btn btn-outline" id="viewDirectoryBtn">
+                        <i class="fas fa-address-book"></i>
+                        View Directory
+                    </button>
+                    <button class="btn btn-outline" id="searchContactsBtn">
+                        <i class="fas fa-search"></i>
+                        Search Contacts
+                    </button>
+                </div>
+            </div>
+
+            <!-- Search Panel -->
+            <div class="search-panel" id="searchPanel" style="display: none;">
+                <div class="panel-header">
+                    <h3><i class="fas fa-search"></i> Search Contacts</h3>
+                    <button class="btn-close" id="closeSearchBtn">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <div class="search-form">
+                    <input 
+                        type="text" 
+                        id="searchQuery" 
+                        placeholder="Search by name, department, or job title..."
+                        class="search-input"
+                    >
+                    <button class="btn btn-primary" id="searchSubmitBtn">
+                        <i class="fas fa-search"></i>
+                        Search
+                    </button>
+                </div>
+                
+                <div class="search-results" id="searchResults">
+                    <!-- Search results will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Directory Panel -->
+            <div class="directory-panel" id="directoryPanel" style="display: none;">
+                <div class="panel-header">
+                    <h3><i class="fas fa-address-book"></i> Company Directory</h3>
+                    <button class="btn-close" id="closeDirectoryBtn">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <div class="directory-stats" id="directoryStats">
+                    <!-- Statistics will be populated by JavaScript -->
+                </div>
+                
+                <div class="directory-content" id="directoryContent">
+                    <!-- Directory content will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Error/Success Messages -->
+    <div class="message-container" id="messageContainer">
+        <!-- Messages will be populated by JavaScript -->
+    </div>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <p>&copy; 2024 Contact Enrichment Add-in | Secure API Access</p>
+        <div class="footer-info">
+            <span class="version">v1.0.0</span>
+            <span class="separator">|</span>
+            <span class="status" id="connectionStatus">
+                <i class="fas fa-circle status-indicator"></i>
+                Connected
+            </span>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html> 

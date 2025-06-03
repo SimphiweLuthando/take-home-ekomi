@@ -1,0 +1,45 @@
+{
+  "name": "outlook-addin-backend",
+  "version": "1.0.0",
+  "description": "Secure backend API for Outlook add-in contact enrichment",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js",
+    "dev-script": "node scripts/start-dev.js",
+    "test": "jest",
+    "db:start": "echo 'Starting database with Docker...' && docker-compose up database",
+    "db:logs": "docker-compose logs database",
+    "full:start": "echo 'Starting all services...' && docker-compose up",
+    "full:build": "echo 'Building and starting all services...' && docker-compose up --build"
+  },
+  "keywords": [
+    "outlook",
+    "addin",
+    "express",
+    "jwt",
+    "authentication",
+    "contact-enrichment"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "bcrypt": "^5.1.1",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.11.3",
+    "cors": "^2.8.5",
+    "helmet": "^7.1.0",
+    "express-rate-limit": "^7.1.5",
+    "express-validator": "^7.0.1",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2",
+    "jest": "^29.7.0",
+    "supertest": "^6.3.3"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+} 
