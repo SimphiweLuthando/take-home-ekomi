@@ -22,8 +22,6 @@ CREATE TABLE IF NOT EXISTS contacts (
 );
 
 -- Insert test users (passwords are hashed versions of 'password123' and 'password456')
--- password123 -> $2b$10$JyH42Acya55sIRDbtmtCk.e7M70euHbtCsapsgHpBu8tsZd6stLDy
--- password456 -> $2b$10$fycoag8lRCf6cX6X0dw1z.6K10alJSng0HO927RgYVIkEoCyOECHy
 INSERT INTO users (email, password_hash) VALUES 
     ('john.doe@company.com', '$2b$10$JyH42Acya55sIRDbtmtCk.e7M70euHbtCsapsgHpBu8tsZd6stLDy'),
     ('jane.smith@company.com', '$2b$10$fycoag8lRCf6cX6X0dw1z.6K10alJSng0HO927RgYVIkEoCyOECHy'),
@@ -32,16 +30,16 @@ ON CONFLICT (email) DO NOTHING;
 
 -- Insert sample contact data for enrichment
 INSERT INTO contacts (email, full_name, department, phone_number, job_title, company, location) VALUES 
-    ('john.doe@company.com', 'John Doe', 'Engineering', '+1-555-0101', 'Senior Software Engineer', 'Tech Corp', 'San Francisco, CA'),
-    ('jane.smith@company.com', 'Jane Smith', 'Marketing', '+1-555-0102', 'Marketing Manager', 'Tech Corp', 'New York, NY'),
-    ('alice.johnson@company.com', 'Alice Johnson', 'Sales', '+1-555-0103', 'Sales Director', 'Tech Corp', 'Chicago, IL'),
-    ('bob.wilson@company.com', 'Bob Wilson', 'HR', '+1-555-0104', 'HR Specialist', 'Tech Corp', 'Austin, TX'),
-    ('sarah.davis@company.com', 'Sarah Davis', 'Engineering', '+1-555-0105', 'Lead Developer', 'Tech Corp', 'Seattle, WA'),
-    ('mike.brown@company.com', 'Mike Brown', 'Operations', '+1-555-0106', 'Operations Manager', 'Tech Corp', 'Denver, CO'),
-    ('emily.taylor@company.com', 'Emily Taylor', 'Design', '+1-555-0107', 'UX Designer', 'Tech Corp', 'Los Angeles, CA'),
-    ('david.anderson@company.com', 'David Anderson', 'Finance', '+1-555-0108', 'Financial Analyst', 'Tech Corp', 'Boston, MA'),
-    ('lisa.garcia@company.com', 'Lisa Garcia', 'Legal', '+1-555-0109', 'Legal Counsel', 'Tech Corp', 'Miami, FL'),
-    ('tom.martinez@company.com', 'Tom Martinez', 'Product', '+1-555-0110', 'Product Manager', 'Tech Corp', 'Portland, OR')
+    ('john.doe@company.com', 'John Doe', 'Engineering', '+27115550101', 'Senior Software Engineer', 'Tech Corp SA', 'Johannesburg, Gauteng'),
+    ('jane.smith@company.com', 'Jane Smith', 'Marketing', '+27215550102', 'Marketing Manager', 'Tech Corp SA', 'Cape Town, Western Cape'),
+    ('alice.johnson@company.com', 'Alice Johnson', 'Sales', '+27315550103', 'Sales Director', 'Tech Corp SA', 'Durban, KwaZulu-Natal'),
+    ('bob.wilson@company.com', 'Bob Wilson', 'HR', '+27125550104', 'HR Specialist', 'Tech Corp SA', 'Pretoria, Gauteng'),
+    ('sarah.davis@company.com', 'Sarah Davis', 'Engineering', '+27115550105', 'Lead Developer', 'Tech Corp SA', 'Sandton, Gauteng'),
+    ('mike.brown@company.com', 'Mike Brown', 'Operations', '+27115550106', 'Operations Manager', 'Tech Corp SA', 'Midrand, Gauteng'),
+    ('emily.taylor@company.com', 'Emily Taylor', 'Design', '+27215550107', 'UX Designer', 'Tech Corp SA', 'Stellenbosch, Western Cape'),
+    ('david.anderson@company.com', 'David Anderson', 'Finance', '+27115550108', 'Financial Analyst', 'Tech Corp SA', 'Rosebank, Gauteng'),
+    ('lisa.garcia@company.com', 'Lisa Garcia', 'Legal', '+27315550109', 'Legal Counsel', 'Tech Corp SA', 'Umhlanga, KwaZulu-Natal'),
+    ('tom.martinez@company.com', 'Tom Martinez', 'Product', '+27115550110', 'Product Manager', 'Tech Corp SA', 'Centurion, Gauteng')
 ON CONFLICT (email) DO NOTHING;
 
 -- Create indexes for better query performance

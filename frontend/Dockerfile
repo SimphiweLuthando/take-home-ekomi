@@ -1,13 +1,13 @@
-# Use Nginx Alpine for serving static files
+
 FROM nginx:alpine
 
-# Create app directory
+
 WORKDIR /usr/share/nginx/html
 
-# Copy static files
+
 COPY . .
 
-# Create custom nginx configuration
+
 COPY <<EOF /etc/nginx/conf.d/default.conf
 server {
     listen 80;
@@ -67,22 +67,22 @@ server {
 }
 EOF
 
-# Create placeholder images directory and basic icons
+
 RUN mkdir -p images && \
     echo '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>' > images/icon-16.png && \
     echo '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>' > images/icon-32.png && \
     echo '<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>' > images/icon-80.png
 
-# Set proper permissions
+
 RUN chown -R nginx:nginx /usr/share/nginx/html && \
     chmod -R 755 /usr/share/nginx/html
 
-# Health check
+
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
     CMD wget --no-verbose --tries=1 --spider http://localhost/health || exit 1
 
-# Expose port 80
+
 EXPOSE 80
 
-# Start Nginx
+
 CMD ["nginx", "-g", "daemon off;"] 
